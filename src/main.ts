@@ -1,5 +1,19 @@
 import { createApp } from 'vue'
-import './style.css'
+
+import {router,setupRouter} from '@/router'
+import { setupRouterGuard } from '@/router/guard';
+
 import App from './App.vue'
 
-createApp(App).mount('#app')
+async function bootstrap(){
+    const app = createApp(App);
+    
+    // 配置路由
+    setupRouter(app);
+    // 路由守卫
+    setupRouterGuard(router)
+    
+    app.mount("#app");
+}
+
+bootstrap()
