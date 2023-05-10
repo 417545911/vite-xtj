@@ -1,4 +1,1 @@
-
-export function setupRouterGuard(router){
-    
-}
+export function setupRouterGuard(router) {}
