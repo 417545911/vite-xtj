@@ -1,18 +1,15 @@
-import {createRouter,createWebHashHistory} from 'vue-router';
-import {basicRoutes} from './routes';
+import { Router, createRouter, RouteRecordRaw, createWebHashHistory } from 'vue-router';
+import remainingRouter from './modules/remaining';
+import { ascending, formatTwoStageRoutes, formatFlatteningRoutes } from './utils';
 
-// 创建一个可以被 Vue 应用程序使用的路由实例
-export const router = createRouter({
-    // 创建一个 hash 历史记录
-    history: createWebHashHistory(),
-    // 应该添加到路由的初始路由列表
-    routes: basicRoutes,
-    // 是否应该禁止尾部斜杆
-    strict:true,
-    scrollBehavior:()=>({left:0,top:0})
-})
+/** 不参与菜单的路由 */
+export const remainingPaths = Object.keys(remainingRouter).map(v => {
+  return remainingRouter[v].path;
+});
 
-// 配置路由器
-export function setupRouter(app){
-    app.use(router)
-}
+/** 导出处理后的静态路由（三级及以上的路由全部拍成二级） */
+export const constantRoutes: Array<RouteRecordRaw> = formatTwoStageRoutes(
+  formatFlatteningRoutes(buildHierarchyTree(ascending(routes)))
+);
+/** 创建路由实例 */
+export const router: Router = createRouter({});

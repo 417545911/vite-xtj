@@ -1,14 +1,21 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { getPluginsList } from './build/plugins';
+import { UserConfigExport, ConfigEnv, loadEnv } from 'vite';
+import { warpperEnv } from './build';
 
-import path from 'path'
+import path from 'path';
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [vue()],
-  resolve:{
-    alias:{
-      '@':path.resolve('./src')
-    }
-  }
-})
+/** 当前执行node命令时文件夹的地址（工作目录） */
+const root: string = process.cwd();
+
+export default ({ command, mode }: ConfigEnv): UserConfigExport => {
+  const { VITE_CDN, VITE_COMPRESSION } = warpperEnv(loadEnv(mode, root));
+  return {
+    root,
+    plugins: getPluginsList(command, VITE_CDN, VITE_COMPRESSION),
+    resolve: {
+      alias: {
+        '@': path.resolve('./src'),
+      },
+    },
+  };
+};
