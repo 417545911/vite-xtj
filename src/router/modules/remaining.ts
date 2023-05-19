@@ -1,7 +1,7 @@
-const Layout = () => import('@/layouts/index.vue');
+const Layout = () => import('@/layout/index.vue');
 export default [
   {
-    path: 'login',
+    path: '/login',
     name: 'Login',
     component: () => import('@/views/login/index.vue'),
     meta: {
@@ -19,12 +19,5 @@ export default [
       showLink: false,
       rank: 104,
     },
-    children: [
-      {
-        path: '/redirect/:path(.*)',
-        name: 'Redirect',
-        component: () => import('@/layouts/redirect.vue'),
-      },
-    ],
   },
 ] as Array<RouteConfigsTable>;

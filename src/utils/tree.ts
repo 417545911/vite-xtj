@@ -1,3 +1,5 @@
+import { hasOwn } from '@vueuse/core';
+
 /**
  * @deprecated 创建层级关系
  * @param tree 树
@@ -10,5 +12,13 @@ export const buildHierarchyTree = (tree: any[], pathList = []): any => {
     return [];
   }
   if (!tree || tree.length === 0) return [];
-  //   for()
+  for (const [key, node] of tree.entries()) {
+    node.id = key;
+    node.parentId = pathList.length ? pathList[pathList.length - 1] : null;
+    node.pathList = [...pathList, node.id];
+    const hasChildren = node.children && node.children.length > 0;
+    if (hasChildren) {
+      buildHierarchyTree(node.children, node.pathList);
+    }
+  }
 };
