@@ -16,7 +16,6 @@ Object.keys(modules).forEach(key => {
   }
 });
 /** 导出处理后的静态路由（三级及以上的路由全部拍成二级） */
-console.info('🐕‍🦺 ~file: index.ts ~line: 19 ~routes', routes);
 export const constantRoutes: Array<RouteRecordRaw> = routes;
 /** 创建路由实例 */
 export const router: Router = createRouter({
