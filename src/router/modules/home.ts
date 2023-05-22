@@ -4,7 +4,7 @@ export default {
   path: '/',
   name: 'Home',
   component: Layout,
-  redirect: '/welcome',
+  redirect: '/login',
   meta: {
     icon: 'homeFilled',
     title: '首页',

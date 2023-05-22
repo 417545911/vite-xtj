@@ -8,7 +8,15 @@
         </div>
         <div class="login-box">
           <div class="login-form">
-            <avatar />
+            <avatar class="avatar" />
+            <Motion>
+              <h2 class="outline-none">你好</h2>
+            </Motion>
+            <el-form ref="ruleFormRef" :model="ruleForm" :rules="loginRules" size="large">
+              <el-form-item :rules="[{ required: true, message: '请输入账号', trigger: 'blur' }]" prop="username">
+                <el-input clearable v-model="ruleForm.username" placeholder="账号" />
+              </el-form-item>
+            </el-form>
           </div>
         </div>
       </div>
@@ -20,8 +28,15 @@
 import bg from '@/assets/login/bg.png';
 import illustration from '@/assets/login/illustration.svg';
 import avatar from '@/assets/login/avatar.svg';
+import Motion from './utils/motion';
+import { loginRules } from './utils/rule';
 
-import { toRaw } from 'vue';
+import { toRaw, reactive } from 'vue';
+
+const ruleForm = reactive({
+  username: 'admin',
+  password: 'admin123',
+});
 </script>
 
 <style scoped lang="scss">
