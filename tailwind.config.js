@@ -4,7 +4,7 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
-  content: ['./src/**/*.{vue.js,ts,jsx,tsx}'],
+  content: ['./index.html', './src/**/*.vue'],
   theme: {
     extend: {
       colors: {
