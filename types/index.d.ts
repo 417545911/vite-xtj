@@ -6,16 +6,16 @@ type EmitType = (event: string, ...args: any[]) => void;
 
 type ComponentRef<T extends HTMLElement = HTMLDivElement> = ComponentElRef<T> | null;
 
-type ElRef<T extends HTMLElement = HTMLDivElement> = Nullable<T>
+type ElRef<T extends HTMLElement = HTMLDivElement> = Nullable<T>;
 
 type Nullable<T> = T | null;
 
 type Recordable<T = any> = Record<string, T>;
 
-type ReadonlyRecordable<T = any> = {
-    readonly [key: string]: T;
-}
+type ReadonlyRecordable<T = any> = { readonly [key: string]: T };
 
-interface ComponentElRef<T extends HTMLElement = HTMLDivElement> { $el: T }
+interface PromiseFn<T = any, R = T> { (...arg: T[]): Promise<R> };
 
-interface ImportMetaEnv extends ViteEnv { __: unknown }
+interface ComponentElRef<T extends HTMLElement = HTMLDivElement> { $el: T };
+
+interface ImportMetaEnv extends ViteEnv { __: unknown };

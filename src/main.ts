@@ -2,6 +2,8 @@ import { createApp } from 'vue';
 import router from './router';
 import ElementPlus from 'element-plus';
 import App from './App.vue';
+import { getServerConfig } from './config'
+import { MotionPlugin } from "@vueuse/motion"
 
 // 引入重置样式
 import './styles/reset.scss';
@@ -11,12 +13,12 @@ import './styles/index.scss';
 import './styles/tailwind.css';
 import 'element-plus/dist/index.css';
 
-async function bootstrap() {
-  const app = createApp(App);
+const app = createApp(App);
+
+getServerConfig(app).then(async config => {
   app.use(router);
   await router.isReady();
-  app.use(ElementPlus);
-  app.mount('#app');
-}
+  app.use(MotionPlugin).use(ElementPlus)
+  app.mount("#app")
+})
 
-bootstrap();
