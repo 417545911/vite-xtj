@@ -1,7 +1,6 @@
 import type { VNode, FunctionalComponent, PropType as VuePropType, ComponentPublicInstance } from 'vue';
-import type { Echarts } from 'echarts';
 import type { IconifyIcon } from '@iconify/vue';
-import { type RouteCompoent, type RouteLocationNormalized } from 'vue-router';
+import { type RouteComponent, type RouteLocationNormalized } from 'vue-router';
 
 /**
  * 全局类型声明，无需引入直接在 `.vue`、`.ts`、`.tsx`文件使用即可获得类型提示
@@ -26,12 +25,10 @@ declare global {
   type ViteCompression = 'none' | 'gzip' | 'brotli' | 'both' | 'gzip-clear' | 'brotli-clear' | 'both-clear';
   /**
    * 全局自定义环境变量的类型声明
-   * @see {@link https://yiming_chang.gitee.io/pure-admin-doc/pages/config/#%E5%85%B7%E4%BD%93%E9%85%8D%E7%BD%AE}
    */
   interface ViteEnv {
     VITE_PORT: number;
     VITE_PUBLIC_PATH: string;
-    VITE_ROUTER_HISTORY: string;
     VITE_CDN: boolean;
     VITE_COMPRESSION: ViteCompression;
   }
