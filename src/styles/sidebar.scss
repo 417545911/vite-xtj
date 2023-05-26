@@ -1,0 +1,14 @@
+.main-container {
+  height: 100vh;
+  min-height: 100%;
+  /* main-content 属性动画*/
+  transition: margin-left var(--pure-transition-duration);
+  // margin-left: $sideBarWidth;
+  position: relative;
+  background: #f0f2f5;
+
+  .el-scrollbar__wrap {
+    overflow: auto;
+    height: 100%;
+  }
+}
