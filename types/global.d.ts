@@ -137,4 +137,21 @@ declare global {
     /** 子路由配置项 */
     children?: Array<RouteChildrenConfigsTable>;
   }
+
+  /**
+   * `responsive-storage` 本地响应式 `storage` 的类型声明
+   */
+  interface ResponsiveStorage {
+    locale: { locale?: string };
+    layout: { layout?: string; theme?: string; darkMode?: boolean; sidebarStatus?: boolean; epThemeColor?: string };
+    configure: { grey?: boolean; weak?: boolean; hideTabs?: boolean; showLogo?: boolean; showModel?: string; multiTagsCache?: boolean };
+    tags?: Array<any>;
+  }
+
+  /**
+   * 项目里所有组件实例都能访问到的全局属性对象的类型声明
+   */
+  interface GlobalPropertiesApi {
+    $storage: ResponsiveStorage;
+  }
 }

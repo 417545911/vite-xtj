@@ -1,6 +1,10 @@
 <template>
   <div class="select-none">
     <img :src="bg" class="wave" />
+    <div class="flex-c absolute right-5 top-3">
+      <!-- 主题 -->
+      <el-switch v-model="dataTheme" inline-prompt :active-icon="dayIcon" :inactive-icon="darkIcon" @change="dataThemeChange"/>
+    </div>
     <div class="flex-c">
       <div class="login-container">
         <div class="img">
@@ -48,15 +52,17 @@ import illustration from '@/assets/login/illustration.svg';
 import avatar from '@/assets/login/avatar.svg';
 import Motion from './utils/motion';
 import { loginRules } from './utils/rule';
+import {useDataThemeChange} from "@/layout/hooks/useDataThemeChange"
 
 import { toRaw, reactive, ref } from 'vue';
+import dayIcon from "@/assets/svg/day.svg?component";
+import darkIcon from "@/assets/svg/dark.svg?component";
 
 const loading = ref(false);
 const ruleFormRef = ref<FormInstance>();
-const ruleForm = reactive({
-  username: 'admin',
-  password: 'admin123',
-});
+const ruleForm = reactive({ username: 'admin',password: 'admin123'});
+
+const {dataTheme} = useDataThemeChange();
 
 const onLogin = async (formEl: FormInstance | undefined) => {
   loading.value = true;
