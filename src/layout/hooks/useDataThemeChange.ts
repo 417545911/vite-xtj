@@ -1,6 +1,8 @@
 import { ref } from "vue";
 import { themeColorsType } from "../types"
 
+// import { useGlobal } from "@/utils/common"
+
 export function useDataThemeChange() {
   const themeColors = ref<Array<themeColorsType>>([
     /** 道奇蓝（默认） */
@@ -23,3 +25,24 @@ export function useDataThemeChange() {
     { color: "#722ed1", themeColor: "saucePurple" }
   ])
 }
+
+// const { $storage } = useGlobal<GlobalPropertiesApi>();
+// const dataTheme = ref<boolean>($storage?.layout?.darkMode)
+
+// /** 日间、夜间主题切换 */
+// function dataThemeChange() {
+//   /** 如果当前是light夜间主题,默认切换到default主题 */
+//   if (useEpThemeStoreHook().epTheme === 'light' && dataTheme.value) {
+//     setLayoutThemeColor('default')
+//   } else {
+//     setLayoutThemeColor(useEpThemeStoreHook().epTheme);
+//   }
+
+//   if (dataTheme.value) {
+//     document.documentElement.classList.add('dark')
+//   } else {
+//     document.documentElement.classList.remove('dark')
+//   }
+
+
+// }

@@ -52,7 +52,7 @@ import illustration from '@/assets/login/illustration.svg';
 import avatar from '@/assets/login/avatar.svg';
 import Motion from './utils/motion';
 import { loginRules } from './utils/rule';
-import {useDataThemeChange} from "@/layout/hooks/useDataThemeChange"
+// import {useDataThemeChange} from "@/layout/hooks/useDataThemeChange"
 
 import { toRaw, reactive, ref } from 'vue';
 import dayIcon from "@/assets/svg/day.svg?component";
@@ -62,7 +62,7 @@ const loading = ref(false);
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = reactive({ username: 'admin',password: 'admin123'});
 
-const {dataTheme} = useDataThemeChange();
+// const {dataTheme} = useDataThemeChange();
 
 const onLogin = async (formEl: FormInstance | undefined) => {
   loading.value = true;
