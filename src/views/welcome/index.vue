@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, reactive } from 'vue';
+import { onMounted, ref } from 'vue';
 import selfPlanePath from '@/assets/airplane/self.png';
 import enemyPlanePath from '@/assets/airplane/enemy.png';
 
@@ -9,9 +9,9 @@ const selfPlane = ref();
 /** 敌机图片资源 */
 const enemyPlane = ref();
 /** 多个敌机对象组成的对象 */
-const enemys = {};
+const enemys: Record<string, any> = {};
 /** 多个子弹对象组成的对象 */
-const bullets = {};
+const bullets: Record<string, any> = {};
 
 /** 我方战机对象的实现 */
 function createFighter(ctx: any) {
@@ -47,10 +47,11 @@ function createFighter(ctx: any) {
 
 /** 敌方战机对象的实现 */
 function createEnemy(ctx: any) {
-  let timer = null;
+  let timer: any = null;
   const enemy = {
-    x: parseInt(Math.random() * (300 - enemyPlane.value.width)),
+    x: Math.random() * (300 - enemyPlane.value.width),
     y: 0,
+    name: '',
     w: enemyPlane.value.width,
     h: enemyPlane.value.height,
     clear() {
@@ -80,10 +81,11 @@ function createEnemy(ctx: any) {
 
 /** 子弹对象的实现 */
 function createBullet(ctx: any, x: number, y: number, speed: number) {
-  let timer = null;
+  let timer: any = null;
   const bullet = {
     x,
     y,
+    name: '',
     init() {
       timer = setInterval(() => {
         if (this.y < 0) {
