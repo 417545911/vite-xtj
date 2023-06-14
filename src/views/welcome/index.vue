@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import selfPlanePath from '@/assets/airplane/self.png';
-import enemyPlanePath from '@/assets/airplane/enemy.png';
+import selfPlanePath from '@/assets/airplane/self1-1.png';
+import enemyPlanePath from '@/assets/airplane/enemy1-1.png';
 
 const canvas1 = ref();
 /** 我方战机图片资源 */
@@ -13,22 +13,28 @@ const enemys: Record<string, any> = {};
 /** 多个子弹对象组成的对象 */
 const bullets: Record<string, any> = {};
 
+const canHeight = window.innerHeight;
+const canWidth = window.innerWidth;
+
 /** 我方战机对象的实现 */
 function createFighter(ctx: any) {
+  const selfWidth = selfPlane.value.width;
+  const selfHeight = selfPlane.value.height;
   const fighter = {
     x: 130,
-    y: 350,
-    w: selfPlane.value.width,
-    h: selfPlane.value.height,
+    y: canHeight - selfHeight,
+    w: selfWidth,
+    h: selfHeight,
+    speed: 10,
     move(x: number) {
       ctx.clearRect(this.x, this.y, this.w, this.h);
       ctx.drawImage(selfPlane.value, (this.x += x), this.y);
     },
     left() {
-      this.move(-4);
+      this.move(-this.speed);
     },
     right() {
-      this.move(4);
+      this.move(this.speed);
     },
   };
 
@@ -48,12 +54,14 @@ function createFighter(ctx: any) {
 /** 敌方战机对象的实现 */
 function createEnemy(ctx: any) {
   let timer: any = null;
+  const enemyWidth = enemyPlane.value.width;
+  const enemyHeight = enemyPlane.value.height;
   const enemy = {
-    x: Math.random() * (300 - enemyPlane.value.width),
+    x: Math.random() * (canWidth - enemyWidth),
     y: 0,
     name: '',
-    w: enemyPlane.value.width,
-    h: enemyPlane.value.height,
+    w: enemyWidth,
+    h: enemyHeight,
     clear() {
       ctx.clearRect(this.x, this.y, this.w, this.h);
     },
@@ -65,7 +73,7 @@ function createEnemy(ctx: any) {
     init() {
       ctx.drawImage(enemyPlane.value, enemy.x, enemy.y);
       timer = setInterval(() => {
-        if (this.y > 400) {
+        if (this.y > canHeight) {
           this.stop();
           return;
         }
@@ -142,6 +150,8 @@ function loadImage(src: string) {
 }
 
 onMounted(async () => {
+  canvas1.value.height = canHeight;
+  canvas1.value.width = canWidth;
   const ctx1 = canvas1.value.getContext('2d');
   selfPlane.value = await loadImage(selfPlanePath);
   const myFig = createFighter(ctx1);
@@ -153,26 +163,29 @@ onMounted(async () => {
   }, 1000);
   setInterval(() => {
     const n = Math.random();
-    bullets[n] = createBullet(ctx1, myFig.x + 20, myFig.y - 10, 100);
+    bullets[n] = createBullet(ctx1, myFig.x + myFig.w / 2, myFig.y - 10, 100);
     bullets[n].name = n;
   }, 200);
 });
 </script>
 
 <template>
-  <h1>你好,欢迎</h1>
   <div class="main-box">
-    <canvas class="canvas1" ref="canvas1" width="300" height="400">您的浏览器不支持canvas!</canvas>
-    <canvas class="bgc" ref="bgc" width="300" height="400">您的浏览器不支持canvas!</canvas>
+    <canvas class="canvas1" ref="canvas1">您的浏览器不支持canvas!</canvas>
+    <div class="bgc"></div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .main-box {
   position: relative;
+  width: 100vw;
+  height: 100vh;
   .bgc {
     position: absolute;
-    background: url('@/assets/airplane/bg.png');
+    width: 100%;
+    height: 100%;
+    background: url('@/assets/airplane/bg1.jpg');
     z-index: 1;
     animation: flymove 10s linear 20000;
   }
