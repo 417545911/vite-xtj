@@ -61,11 +61,10 @@ const getWxSdk = async () => {
   });
   wx.ready(function () {
     wx.updateAppMessageShareData({
-      title: '测试', // 分享时的标题
+      title: '飞机大作战', // 分享时的标题
       desc: '向着星辰与深渊', // 分享描述
       link,
-      imgUrl:
-        'https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/6c61ae65d1c41ae8221a670fa32d05aa.svg',
+      imgUrl: 'http://192.168.17.177/src/assets/airplane/enemy1-1.png',
       success: function () {
         console.log('分享成功1');
       },
@@ -81,7 +80,7 @@ const getWxSdk = async () => {
         const speed = res.speed; // 速度，以米/每秒计
         const accuracy = res.accuracy; // 位置精度
         console.info("🐕‍🦺 ~file: jssdk.ts ~line: 82 ~latitude", res);
-        alert(`经纬度:${latitude + ',' + longitude + speed + accuracy}`)
+        alert(`经纬度测试:${latitude + ',' + longitude + speed + accuracy}`)
       }
     });
   });
