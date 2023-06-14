@@ -1,6 +1,7 @@
 import axios from 'axios';
 import wx from 'weixin-js-sdk';
 import sha1 from 'sha1'
+import enemy from '@/assets/airplane/enemy2.png'
 
 const config = {
   token: "Ljy18270740209",
@@ -64,7 +65,7 @@ const getWxSdk = async () => {
       title: '飞机大作战', // 分享时的标题
       desc: '向着星辰与深渊', // 分享描述
       link,
-      imgUrl: 'http://192.168.17.177/src/assets/airplane/enemy1-1.png',
+      imgUrl: enemy,
       success: function () {
         console.log('分享成功1');
       },
