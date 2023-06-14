@@ -1,27 +1,88 @@
 import axios from 'axios';
 import wx from 'weixin-js-sdk';
+import sha1 from 'sha1'
+
+const config = {
+  token: "Ljy18270740209",
+  appId: "wx8f36c7cecdfa60f4",
+  appsecret: "8ec67fdf34fce4ae7c1996fcc73d6e4e",
+};
+
+/** 生成随机字符串 */
+const createNonceStr = () => Math.random().toString(36).substr(2, 15);
+/** 生成时间戳 */
+const createTimestamp = () => parseInt(new Date().getTime() / 1000) + '';
+// 对参数进行字典排序
+const raw = (args: any) => {
+  let keys = Object.keys(args);
+  keys = keys.sort();
+  let newArgs = {};
+  keys.forEach(function (key) {
+    newArgs[key.toLowerCase()] = args[key];
+  });
+
+  let str = '';
+  for (let k in newArgs) {
+    str += '&' + k + '=' + newArgs[k];
+  }
+  return str.substr(1);
+}
+// 生成签名
+const generateSignature = (ticket, nonceStr, timestamp, url) => {
+  const params = {
+    jsapi_ticket: ticket,
+    noncestr: nonceStr,
+    timestamp: timestamp,
+    url: url
+  };
+  const string = raw(params);
+  const signature = sha1(string);
+  return signature;
+}
 
 /** 微信分享功能 */
 const getWxSdk = async () => {
-  const { data } = await axios({ url: `http://localhost:3000/getSign`, params: { url: 'http://192.168.17.177:8848/login' } })
+  const link = location.href;
+  const ticket = 'O3SMpm8bG7kJnF36aXbe82wART_4LIR2pTOciT2IvEkRZzEoWF4UIcm8K2VcI2NFy8PZHVtfOzcVURjXin4O_w'
+  // const { data } = await axios({ url: `http://localhost:3000/getSign`, params: { link, ticket } }) || {}
+  const nonceStr = createNonceStr();
+  const timestamp = createTimestamp()
+  const signature = generateSignature(ticket, nonceStr, timestamp, link)
+  const ret = { signature, appId: config.appId, nonceStr, timestamp }
   wx.config({
-    debug: true,
-    ...data,
-    jsApiList: ['updateAppMessageShareData'], // js接口列表
+    debug: false,
+    // ...data,
+    ...ret,
+    jsApiList: [
+      'updateAppMessageShareData',
+      'updateTimelineShareData',
+      'getLocation'
+    ]
   });
   wx.ready(function () {
     wx.updateAppMessageShareData({
       title: '测试', // 分享时的标题
       desc: '向着星辰与深渊', // 分享描述
-      link: 'https://4wi9798646.zicp.fun/login',
+      link,
       imgUrl:
-        'https://image.baidu.com/search/detail?ct=503316480&z=0&ipn=d&word=%E5%9B%BE%E7%89%87&hs=0&pn=0&spn=0&di=7214885350303334401&pi=0&rn=1&tn=baiduimagedetail&is=0%2C0&ie=utf-8&oe=utf-8&cl=2&lm=-1&cs=3603845141%2C2283980107&os=3005380784%2C326343445&simid=4269932007%2C868022017&adpicid=0&lpn=0&ln=30&fr=ala&fm=&sme=&cg=&bdtype=0&oriquery=%E5%9B%BE%E7%89%87&objurl=https%3A%2F%2Flmg.jj20.com%2Fup%2Fallimg%2F4k%2Fs%2F02%2F210924233115O14-0-lp.jpg&fromurl=ippr_z2C%24qAzdH3FAzdH3Fooo_z%26e3B33da_z%26e3Bv54AzdH3F9hAzdH3Fu3AzdH3Fnmbn9a_z%26e3Bip4s&gsm=&islist=&querylist=&dyTabStr=MCw2LDEsMyw0LDUsMiw3LDgsOQ%3D%3D',
+        'https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/6c61ae65d1c41ae8221a670fa32d05aa.svg',
       success: function () {
         console.log('分享成功1');
       },
       cancel: function () {
         console.log('取消分享1');
       },
+    });
+    wx.getLocation({
+      type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+      success: function (res: any) {
+        const latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+        const longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+        const speed = res.speed; // 速度，以米/每秒计
+        const accuracy = res.accuracy; // 位置精度
+        console.info("🐕‍🦺 ~file: jssdk.ts ~line: 82 ~latitude", res);
+        alert(`经纬度:${latitude + ',' + longitude + speed + accuracy}`)
+      }
     });
   });
 };
