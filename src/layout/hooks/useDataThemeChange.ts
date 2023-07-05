@@ -24,25 +24,24 @@ export function useDataThemeChange() {
     /** 深紫罗兰色 */
     { color: "#722ed1", themeColor: "saucePurple" }
   ])
+
+  let dataTheme = ref<boolean>(true)
+  const body = document.documentElement as HTMLElement
+  /** 设置 `element-plus` 主题色 */
+  const setEpThemeColor = (color: string) => { };
+
+  /** 日间、夜间主题切换 */
+  function dataThemeChange() {
+    if (dataTheme.value) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }
+
+  return {
+    body,
+    dataTheme,
+    dataThemeChange
+  }
 }
-
-// const { $storage } = useGlobal<GlobalPropertiesApi>();
-// const dataTheme = ref<boolean>($storage?.layout?.darkMode)
-
-// /** 日间、夜间主题切换 */
-// function dataThemeChange() {
-//   /** 如果当前是light夜间主题,默认切换到default主题 */
-//   if (useEpThemeStoreHook().epTheme === 'light' && dataTheme.value) {
-//     setLayoutThemeColor('default')
-//   } else {
-//     setLayoutThemeColor(useEpThemeStoreHook().epTheme);
-//   }
-
-//   if (dataTheme.value) {
-//     document.documentElement.classList.add('dark')
-//   } else {
-//     document.documentElement.classList.remove('dark')
-//   }
-
-
-// }

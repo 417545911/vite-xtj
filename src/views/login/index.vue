@@ -3,7 +3,12 @@
     <img :src="bg" class="wave" />
     <div class="flex-c absolute right-5 top-3">
       <!-- 主题 -->
-      <el-switch v-model="dataTheme" inline-prompt :active-icon="dayIcon" :inactive-icon="darkIcon" @change="dataThemeChange"/>
+      <el-switch
+        v-model="dataTheme"
+        inline-prompt
+        :active-icon="dayIcon"
+        :inactive-icon="darkIcon"
+        @change="dataThemeChange" />
     </div>
     <div class="flex-c">
       <div class="login-container">
@@ -48,23 +53,24 @@
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus';
 import bg from '@/assets/login/bg.png';
-import illustration from '@/assets/login/illustration.svg';
-import avatar from '@/assets/login/avatar.svg';
+import illustration from '@/assets/login/illustration.svg?component';
+import avatar from '@/assets/login/avatar.svg?component';
 import Motion from './utils/motion';
 import { loginRules } from './utils/rule';
-import {useRouter} from 'vue-router';
-// import {useDataThemeChange} from "@/layout/hooks/useDataThemeChange"
+import { useRouter } from 'vue-router';
+import { useDataThemeChange } from '@/layout/hooks/useDataThemeChange';
 
 import { toRaw, reactive, ref } from 'vue';
-import dayIcon from "@/assets/svg/day.svg?component";
-import darkIcon from "@/assets/svg/dark.svg?component";
+import dayIcon from '@/assets/svg/day.svg?component';
+import darkIcon from '@/assets/svg/dark.svg?component';
 
 const loading = ref(false);
 const ruleFormRef = ref<FormInstance>();
-const ruleForm = reactive({ username: 'admin',password: 'admin123'});
+const ruleForm = reactive({ username: 'admin', password: 'admin123' });
 const router = useRouter();
 
-// const {dataTheme} = useDataThemeChange();
+const { dataTheme, dataThemeChange } = useDataThemeChange();
+dataThemeChange();
 
 const onLogin = async (formEl: FormInstance | undefined) => {
   loading.value = true;
@@ -72,7 +78,7 @@ const onLogin = async (formEl: FormInstance | undefined) => {
   await formEl.validate((valid, fields) => {
     if (valid) {
       console.info('🐕‍🦺登录成功', valid);
-      router.push({name:"Welcome"})
+      router.push({ name: 'Welcome' });
     } else {
       loading.value = false;
       return fields;
