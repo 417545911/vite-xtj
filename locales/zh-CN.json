@@ -1,0 +1,20 @@
+{
+  "login": {
+    "username": "账号",
+    "password": "密码",
+    "verifyCode": "验证码",
+    "remember": "记住密码",
+    "sure": "确认密码",
+    "forget": "忘记密码?",
+    "login": "登录",
+    "thirdLogin": "第三方登录",
+    "phoneLogin": "手机登录",
+    "qRCodeLogin": "二维码登录",
+    "register": "注册",
+    "weChatLogin": "微信登录",
+    "alipayLogin": "支付宝登录",
+    "qqLogin": "QQ登录",
+    "weiboLogin": "微博登录",
+    "phone": "手机号码"
+  }
+}

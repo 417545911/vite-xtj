@@ -9,6 +9,17 @@
         :active-icon="dayIcon"
         :inactive-icon="darkIcon"
         @change="dataThemeChange" />
+      <!-- 国际化 -->
+      <el-dropdown trigger="click">
+        <globalization
+          class="hover:text-primary hover:!bg-[transparent] w-[20px] h-[20px] ml-1.5 cursor-pointer outline-none duration-300" />
+        <template #dropdown>
+          <el-dropdown-menu class="translation">
+            <el-dropdown-item>简体中文</el-dropdown-item>
+            <el-dropdown-item>English</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </div>
     <div class="flex-c">
       <div class="login-container">
@@ -54,6 +65,7 @@
 import type { FormInstance } from 'element-plus';
 import bg from '@/assets/login/bg.png';
 import illustration from '@/assets/login/illustration.svg?component';
+import globalization from '@/assets/svg/globalization.svg?component';
 import avatar from '@/assets/login/avatar.svg?component';
 import Motion from './utils/motion';
 import { loginRules } from './utils/rule';
